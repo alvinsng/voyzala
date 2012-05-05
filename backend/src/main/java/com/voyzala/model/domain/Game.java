@@ -97,7 +97,7 @@ public class Game {
     }
 
     public String getCurrentTurnStringKey() {
-        return KeyFactory.keyToString(currentTurnKey);
+        return currentTurnKey != null ? KeyFactory.keyToString(currentTurnKey) : null;
     }
 
     @JsonIgnore

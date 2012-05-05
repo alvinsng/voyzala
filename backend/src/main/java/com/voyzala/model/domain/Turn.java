@@ -61,7 +61,7 @@ public class Turn {
     }
 
     public String getCardStringKey() {
-        return KeyFactory.keyToString(cardKey);
+        return cardKey != null ? KeyFactory.keyToString(cardKey) : null;
     }
 
     @JsonIgnore
