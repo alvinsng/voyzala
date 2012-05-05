@@ -85,9 +85,24 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Boolean submitGuess(String guessText, Key turnKey) {
-        //TODO: Implement
-        return null;
+    public Boolean submitGuess(final Key turnKey, final String guessText) {
+        final Turn turn = turnDao.fetchByKey(turnKey);
+        final Game game = gameDao.fetchByKey(turn.getGameKey());
+        final Card card = cardDao.fetchByKey(turn.getCardKey());
+
+        if (guessText.equals(card.getWord())) {
+            //right answer
+            if (game.getCurrentTurnCount() % 2 == 1) {
+                // I'm Player One
+                game.setPlayerOneScore(game.getPlayerOneScore() + 1);
+            } else {
+                game.setPlayerTwoScore(game.getPlayerTwoScore() + 1);
+            }
+            return true;
+        } else {
+            // wrong answer
+            return false;
+        }
     }
 
     @Override

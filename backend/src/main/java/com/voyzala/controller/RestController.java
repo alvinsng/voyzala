@@ -96,4 +96,11 @@ public class RestController {
         return gameService.guessRound(KeyFactory.stringToKey(gameKey));
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/guess/{turnKey}", method = RequestMethod.GET)
+    public Boolean submitGuess(@PathVariable("turnKey") final String turnKey,
+                               @RequestParam final String guess) {
+        return gameService.submitGuess(KeyFactory.stringToKey(turnKey), guess);
+    }
+
 }
