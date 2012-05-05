@@ -1,10 +1,14 @@
 package com.voyzala.service;
 
+import com.voyzala.model.dao.CardDao;
+import com.voyzala.model.dao.GameDao;
+import com.voyzala.model.dao.TurnDao;
 import com.voyzala.model.domain.Card;
 import com.voyzala.model.domain.Game;
 import com.voyzala.model.domain.Turn;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.util.List;
 
 /**
@@ -18,6 +22,19 @@ import java.util.List;
  */
 @Service("gameService")
 public class GameServiceImpl implements GameService {
+
+    private final GameDao gameDao;
+
+    private final TurnDao turnDao;
+
+    private final CardDao cardDao;
+
+    @Inject
+    public GameServiceImpl(GameDao gameDao, TurnDao turnDao, CardDao cardDao) {
+        this.gameDao = gameDao;
+        this.turnDao = turnDao;
+        this.cardDao = cardDao;
+    }
 
     @Override
     public List<Game> getCurrentGames(Long userId) {
