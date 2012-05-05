@@ -1,5 +1,6 @@
 package com.voyzala.service;
 
+import com.google.appengine.api.datastore.Key;
 import com.voyzala.model.domain.Card;
 import com.voyzala.model.domain.Game;
 import com.voyzala.model.domain.Turn;
@@ -23,8 +24,8 @@ public interface GameService {
 
     void submitTurn(Turn turn);
 
-    Turn guessRound(Long gameId);
+    Turn guessRound(Key gameId);
 
-    Boolean submitGuess(String guessText, Long turnId);
+    Boolean submitGuess(String guessText, Key turnId);
 
 }

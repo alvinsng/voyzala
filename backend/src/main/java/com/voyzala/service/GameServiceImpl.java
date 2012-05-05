@@ -1,5 +1,6 @@
 package com.voyzala.service;
 
+import com.google.appengine.api.datastore.Key;
 import com.voyzala.model.dao.CardDao;
 import com.voyzala.model.dao.GameDao;
 import com.voyzala.model.dao.TurnDao;
@@ -44,8 +45,12 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Card startRound(Long myUserId, Long friendUserId) {
-        //TODO: Implement
-        return null;
+
+        Card card = new Card();
+        card.setWord("shoe");
+        card.setPipeDelimitedForbiddenWords("feet|toes|boot|socks");
+
+        return card;
     }
 
     @Override
@@ -55,13 +60,13 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Turn guessRound(Long gameId) {
+    public Turn guessRound(Key gameId) {
         //TODO: Implement
         return null;
     }
 
     @Override
-    public Boolean submitGuess(String guessText, Long turnId) {
+    public Boolean submitGuess(String guessText, Key turnId) {
         //TODO: Implement
         return null;
     }
