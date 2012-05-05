@@ -39,17 +39,30 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<Game> getCurrentGames(Long userId) {
-        //TODO: Implement
-        return null;
+        return gameDao.getCurrentGamesForUser(userId);
     }
 
     @Override
-    public Card startRound(Long myUserId, Long friendUserId) {
+    public Card createNewGame(Long userId, Long friendId) {
 
-        Card card = new Card();
-        card.setWord("shoe");
-        card.setPipeDelimitedForbiddenWords("feet|toes|boot|socks");
+        final Game game = new Game();
+        game.setPlayerOne(userId);
+        game.setPlayerTwo(friendId);
+        game.setPlayerOneScore(0);
+        game.setPlayerTwoScore(0);
 
+        gameDao.save(game);
+
+        return startRound(game.getKey());
+    }
+
+    @Override
+    public Card startRound(Key gameKey) {
+        final Card card = cardDao.getRandomCard();
+        Turn turn = new Turn();
+        turn.setGameKey(gameKey);
+        turn.setCardKey(card.getKey());
+        turn.setTurnCountInGame(1);
         return card;
     }
 

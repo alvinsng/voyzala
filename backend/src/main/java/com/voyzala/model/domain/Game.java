@@ -3,6 +3,8 @@ package com.voyzala.model.domain;
 import com.google.appengine.api.datastore.Key;
 import com.voyzala.model.Id;
 
+import java.util.Date;
+
 /**
  * description
  * <p/>
@@ -24,6 +26,8 @@ public class Game {
     private Integer playerOneScore;
 
     private Integer playerTwoScore;
+
+    private Date createdOn;
 
     public Key getKey() {
         return key;
@@ -63,5 +67,13 @@ public class Game {
 
     public void setPlayerTwoScore(Integer playerTwoScore) {
         this.playerTwoScore = playerTwoScore;
+    }
+
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
     }
 }

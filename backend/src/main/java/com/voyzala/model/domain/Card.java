@@ -21,6 +21,8 @@ public class Card {
 
     private String pipeDelimitedForbiddenWords;
 
+    private Double randomSeed = Math.random();
+
     public Key getKey() {
         return key;
     }

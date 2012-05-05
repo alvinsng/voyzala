@@ -31,8 +31,8 @@ public class RestController {
 
     @ResponseBody
     @RequestMapping(value = "/game", method = RequestMethod.GET)
-    public Card startGame(@RequestParam String userId, @RequestParam String opponentId) {
-        return gameService.startRound(Long.parseLong(userId), Long.parseLong(opponentId));
+    public Card startGame(@RequestParam String userId, @RequestParam String friendId) {
+        return gameService.createNewGame(Long.parseLong(userId), Long.parseLong(friendId));
     }
 
 }

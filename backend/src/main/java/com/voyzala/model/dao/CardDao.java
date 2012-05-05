@@ -12,4 +12,5 @@ import com.voyzala.model.domain.Card;
  * @author Geoffrey Chandler, geoffc@gmail.com
  */
 public interface CardDao extends BaseDao<Card> {
+    Card getRandomCard();
 }

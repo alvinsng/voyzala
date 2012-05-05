@@ -2,6 +2,8 @@ package com.voyzala.model.dao;
 
 import com.voyzala.model.domain.Game;
 
+import java.util.List;
+
 /**
  * description
  * <p/>
@@ -12,4 +14,5 @@ import com.voyzala.model.domain.Game;
  * @author Geoffrey Chandler, geoffc@gmail.com
  */
 public interface GameDao extends BaseDao<Game> {
+    List<Game> getCurrentGamesForUser(Long userId);
 }
