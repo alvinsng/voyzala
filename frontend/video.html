@@ -1,0 +1,41 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<script>
+			var captureInput = document.getElementById('capture');
+			// Accessing the file object from the input element with id capture
+			var file = captureInput.files[0];
+			if (file) {
+				// getting format data asynchronously
+				file.getFormatData(displayFormatData, errorHandler);
+			}
+
+			// success callback when getting format data
+			function displayFormatData(formatData) {  
+				var mainType = file.type.split("/")[0]; // "image", "video" or "audio"
+				var mediaDescriptionNode = document.createElement("p");
+				if (mainType === "image") {
+					mediaDescriptionNode.appendChild(document.createTextNode("This is an image of dimensions " + formatData.width + "x" + formatData.height);
+				} else {
+					mediaDescriptionNode.appendChild(document.createTextNode("Duration: " + formatData.duration  + "s");
+				}
+				captureInput.parentNode.insertBefore(mediaDescriptionNode, captureInput);
+			}
+
+			// error callback if getting format data fails
+			function errorHandler(error) {
+				alert("Couldn’t retrieve format properties for the selected file (error code " + error.code + ")");
+			}
+		</script>
+
+		<title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<div>TODO write content</div>
+	</body>
+</html>

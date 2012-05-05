@@ -25,6 +25,7 @@ window.fbAsyncInit = function() {
 		xfbml      : true  // parse XFBML
 	});
 
+
 	// listen for and handle auth.statusChange events
 	FB.Event.subscribe('auth.statusChange', function(response) {
 		handleLogin(response);
@@ -65,10 +66,12 @@ function login(){
 function logout(){
 	FB.logout();
 	$("#btn-login .btn-text").text("Login");
+	
 }
 
 function pageChangeNew(){
-	var content = $("#list-friends").html();
+	var content = $("#list-friends li").html();
+
 	if(content)
 		return;
 	
@@ -136,31 +139,35 @@ function ajax(input, success){
 	});
 }
 
+function pageLoad(page){
+	if(page != 'home' && !me){
+		$.mobile.changePage("#home");
+		return false;
+	}
+	if(page == 'new'){
+		pageChangeNew();
+	}
+	else if(page == 'game'){
+		if(!gameId){
+			$.mobile.changePage("#home");
+		}
+	}
+	else if(page == 'view'){
+		pageChangeView();
+	}
+	if(page != 'game')
+		gameId = null;
+	return true;
+}
+
 $(document).ready(function(){
-	
 	$( document ).bind( "pagechange", function( event, data ){
 		//console.log(data);
 		var page = data.toPage[0].dataset.url;
-		//var page = data.toPage.split("#").pop();
-		
-		if(page != 'home' && !me){
+		if(!pageLoad(page)){
 			event.preventDefault();
-			$.mobile.changePage("#home");
-			return;
 		}
-		if(page == 'new'){
-			pageChangeNew();
-		}
-		else if(page == 'game'){
-			if(!gameId){
-				$.mobile.changePage("#home");
-			}
-		}
-		else if(page == 'view'){
-			pageChangeView();
-		}
-		if(page != 'game')
-			gameId = null;
+	//var page = data.toPage.split("#").pop();	
 	});
 	$("#btn-login").click(function(){
 		if(me){
@@ -181,4 +188,5 @@ $(document).ready(function(){
 			login();
 		}
 	});
+	pageLoad(window.location.hash);
 });

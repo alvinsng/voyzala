@@ -1,0 +1,72 @@
+<html>
+	<video autoplay></video>
+	<a href="javascript:stopRecording();">Stop</a>
+	<script>
+		
+		console.log("here");
+		var onFailSoHard = function(e) {
+			console.log('Reeeejected!', e);
+		};
+
+		
+		
+		/*
+		var streamRecorder;
+		
+		function stopRecording() {
+			streamRecorder.getRecordedData(gotData);
+		}
+		
+		function gotData(blob) {
+			var x = new XMLHttpRequest();
+			x.open('POST', 'uploadMessage');
+			x.send(blob);
+		}
+		*/
+		
+		if(navigator.appName && navigator.appName == 'Netscape'){
+	
+			navigator.webkitGetUserMedia('audio, video', function(localMediaStream) {
+				var video = document.querySelector('video');
+				console.log(localMediaStream);
+				//streamRecorder = localMediaStream.record();
+				//console.log(localMediaStream);
+				video.src = window.webkitURL.createObjectURL(localMediaStream);
+			}, onFailSoHard);
+		}
+		else{
+			navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+			var video = document.querySelector('video');
+
+			if (navigator.getUserMedia) {
+				navigator.getUserMedia({audio: true, video: true}, function(stream) {
+					if (navigator.webkitGetUserMedia) {
+						video.src = window.webkitURL.createObjectURL(stream);
+					} else {
+						video.src = stream; // Opera
+					}
+				}, onFailSoHard);
+			} else {
+				//video.src = 'somevideo.webm'; // fallback.
+			}
+		}
+		
+		var context = new window.webkitAudioContext();
+
+		navigator.webkitGetUserMedia({audio: true}, function(stream) {
+			var microphone = context.createMediaStreamSource(stream);
+			var filter = context.createBiquadFilter();
+
+			// microphone -> filter -> destination.
+			microphone.connect(filter);
+			filter.connect(context.destination);
+		}, onFailSoHard);
+	</script>
+	<style>
+		video{
+			width:300px;
+			height:300px;
+			background:red;
+		}
+	</style>
+</html>
