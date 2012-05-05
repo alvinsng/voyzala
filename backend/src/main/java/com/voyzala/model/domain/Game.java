@@ -16,4 +16,52 @@ public class Game {
 
     @Id
     private Key key;
+
+    private Long playerOne;
+
+    private Long playerTwo;
+
+    private Integer playerOneScore;
+
+    private Integer playerTwoScore;
+
+    public Key getKey() {
+        return key;
+    }
+
+    public void setKey(Key key) {
+        this.key = key;
+    }
+
+    public Long getPlayerOne() {
+        return playerOne;
+    }
+
+    public void setPlayerOne(Long playerOne) {
+        this.playerOne = playerOne;
+    }
+
+    public Long getPlayerTwo() {
+        return playerTwo;
+    }
+
+    public void setPlayerTwo(Long playerTwo) {
+        this.playerTwo = playerTwo;
+    }
+
+    public Integer getPlayerOneScore() {
+        return playerOneScore;
+    }
+
+    public void setPlayerOneScore(Integer playerOneScore) {
+        this.playerOneScore = playerOneScore;
+    }
+
+    public Integer getPlayerTwoScore() {
+        return playerTwoScore;
+    }
+
+    public void setPlayerTwoScore(Integer playerTwoScore) {
+        this.playerTwoScore = playerTwoScore;
+    }
 }

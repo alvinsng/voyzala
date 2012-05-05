@@ -1,5 +1,6 @@
 package com.voyzala.model.domain;
 
+import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.Key;
 import com.voyzala.model.Id;
 
@@ -16,4 +17,52 @@ public class Turn {
 
     @Id
     private Key key;
+
+    private BlobKey voiceDataKey;
+
+    private Key gameKey;
+
+    private Key cardKey;
+
+    private Integer turnCountInGame;
+
+    public Key getKey() {
+        return key;
+    }
+
+    public void setKey(Key key) {
+        this.key = key;
+    }
+
+    public BlobKey getVoiceDataKey() {
+        return voiceDataKey;
+    }
+
+    public void setVoiceDataKey(BlobKey voiceDataKey) {
+        this.voiceDataKey = voiceDataKey;
+    }
+
+    public Key getGameKey() {
+        return gameKey;
+    }
+
+    public void setGameKey(Key gameKey) {
+        this.gameKey = gameKey;
+    }
+
+    public Key getCardKey() {
+        return cardKey;
+    }
+
+    public void setCardKey(Key cardKey) {
+        this.cardKey = cardKey;
+    }
+
+    public Integer getTurnCountInGame() {
+        return turnCountInGame;
+    }
+
+    public void setTurnCountInGame(Integer turnCountInGame) {
+        this.turnCountInGame = turnCountInGame;
+    }
 }
