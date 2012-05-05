@@ -1,5 +1,6 @@
 package com.voyzala.service;
 
+import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.Key;
 import com.voyzala.model.dao.CardDao;
 import com.voyzala.model.dao.GameDao;
@@ -31,60 +32,79 @@ public class GameServiceImpl implements GameService {
     private final CardDao cardDao;
 
     @Inject
-    public GameServiceImpl(GameDao gameDao, TurnDao turnDao, CardDao cardDao) {
+    public GameServiceImpl(final GameDao gameDao, final TurnDao turnDao, final CardDao cardDao) {
         this.gameDao = gameDao;
         this.turnDao = turnDao;
         this.cardDao = cardDao;
     }
 
     @Override
-    public List<Game> getCurrentGames(Long userId) {
+    public List<Game> getCurrentGames(final Long userId) {
         return gameDao.getCurrentGamesForUser(userId);
     }
 
     @Override
-    public Game createNewGame(Long userId, Long friendId) {
+    public Game createNewGame(final Long userId, final Long friendId) {
 
         final Game game = new Game();
         game.setPlayerOne(userId);
         game.setPlayerTwo(friendId);
         game.setPlayerOneScore(0);
         game.setPlayerTwoScore(0);
-        game.setCurrentTurnPlayer(userId);
+        game.setCurrentTurnCount(0);
 
         gameDao.save(game);
         return game;
     }
 
     @Override
-    public Card startRound(Key gameKey) {
+    public Card startRound(final Key gameKey) {
         final Card card = cardDao.getRandomCard();
         Turn turn = new Turn();
         turn.setGameKey(gameKey);
         turn.setCardKey(card.getKey());
-        turn.setTurnCountInGame(1);
+        turnDao.save(turn);
         return card;
     }
 
     @Override
-    public void submitTurn(Turn turn) {
+    public void submitTurn(final Key turnKey, final BlobKey voiceDataKey) {
+        final Turn turn = turnDao.fetchByKey(turnKey);
+        final Game game = gameDao.fetchByKey(turn.getGameKey());
+        turn.setVoiceDataKey(voiceDataKey);
         turnDao.save(turn);
+        game.setCurrentTurnCount(game.getCurrentTurnCount() + 1);
+        game.setCurrentTurnKey(turn.getKey());
+        gameDao.save(game);
     }
 
     @Override
-    public Turn guessRound(Key gameId) {
-        //TODO: Implement
-        return null;
+    public Turn guessRound(final Key gameKey) {
+        final Game game = gameDao.fetchByKey(gameKey);
+        return turnDao.fetchByKey(game.getCurrentTurnKey());
     }
 
     @Override
-    public Boolean submitGuess(String guessText, Key turnId) {
-        //TODO: Implement
-        return null;
+    public Card submitGuess(final Key turnKey, final String guessText) {
+        final Turn turn = turnDao.fetchByKey(turnKey);
+        final Game game = gameDao.fetchByKey(turn.getGameKey());
+        final Card card = cardDao.fetchByKey(turn.getCardKey());
+
+        if (guessText.equals(card.getWord())) {
+            //right answer
+            if (game.getCurrentTurnCount() % 2 == 1) {
+                // I'm Player One
+                game.setPlayerOneScore(game.getPlayerOneScore() + 1);
+            } else {
+                game.setPlayerTwoScore(game.getPlayerTwoScore() + 1);
+            }
+            gameDao.save(game);
+        }
+        return card;
     }
 
     @Override
-    public Card createNewCard(String word, String forbiddenWords) {
+    public Card createNewCard(final String word, final String forbiddenWords) {
         final Card card = new Card();
         card.setWord(word);
         card.setForbiddenWords(forbiddenWords);
