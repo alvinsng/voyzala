@@ -1,6 +1,5 @@
 <html>
 	<video autoplay></video>
-	<a href="javascript:stopRecording();">Stop</a>
 	<script>
 		
 		console.log("here");
@@ -8,6 +7,10 @@
 			console.log('Reeeejected!', e);
 		};
 
+		navigator.webkitGetUserMedia('audio, video', function(localMediaStream) {
+		  var video = document.querySelector('video');
+		  video.src = window.webkitURL.createObjectURL(localMediaStream);
+		}, onFailSoHard);
 		
 		
 		/*
@@ -22,13 +25,13 @@
 			x.open('POST', 'uploadMessage');
 			x.send(blob);
 		}
-		*/
+		
 		
 		if(navigator.appName && navigator.appName == 'Netscape'){
 	
 			navigator.webkitGetUserMedia('audio, video', function(localMediaStream) {
 				var video = document.querySelector('video');
-				console.log(localMediaStream);
+				//console.log(localMediaStream);
 				//streamRecorder = localMediaStream.record();
 				//console.log(localMediaStream);
 				video.src = window.webkitURL.createObjectURL(localMediaStream);
@@ -51,6 +54,7 @@
 			}
 		}
 		
+		/*
 		var context = new window.webkitAudioContext();
 
 		navigator.webkitGetUserMedia({audio: true}, function(stream) {
@@ -61,6 +65,7 @@
 			microphone.connect(filter);
 			filter.connect(context.destination);
 		}, onFailSoHard);
+		*/
 	</script>
 	<style>
 		video{
