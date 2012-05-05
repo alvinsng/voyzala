@@ -1,4 +1,8 @@
 // Load the SDK Asynchronously
+var me = null;
+var accessToken = null;
+var serverUrl = "http://voyzala.appspot.com/";
+
 (function(d){
 	var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
 	if (d.getElementById(id)) {
@@ -21,27 +25,102 @@ window.fbAsyncInit = function() {
 
 	// listen for and handle auth.statusChange events
 	FB.Event.subscribe('auth.statusChange', function(response) {
-		if (response.authResponse) {
-			// user has auth'd your app and is logged into Facebook
-			FB.api('/me', function(me){
-				if (me.name) {
-					document.getElementById('auth-displayname').innerHTML = me.name;
-				}
-			})
-			document.getElementById('auth-loggedout').style.display = 'none';
-			document.getElementById('auth-loggedin').style.display = 'block';
-		} else {
-			// user has not auth'd your app, or is not logged into Facebook
-			document.getElementById('auth-loggedout').style.display = 'block';
-			document.getElementById('auth-loggedin').style.display = 'none';
+		handleLogin(response);
+	});
+	FB.Event.subscribe('auth.authResponseChange', function(response) {
+		handleLogin(response);
+	});
+	FB.Event.subscribe('auth.login', function(response) {
+		handleLogin(response);
+	});
+	
+}
+
+function handleLogin(response){
+	if (response.authResponse) {
+		accessToken = response.authResponse.accessToken;
+		FB.api('/me', function(data){
+			me = data;
+			if (data) {
+				$("#btn-login .btn-text").text(data.name);
+			}
+		});
+		pageLoad();
+	}
+	else{
+		$("#btn-login .btn-text").text("Login");
+	}
+}
+
+function login(){
+	FB.login(function(response) {
+		handleLogin(response);
+		}, {
+			scope: 'friends_about_me'
+		});
+}
+function logout(){
+	FB.logout();
+	$("#btn-login .btn-text").text("Login");
+}
+
+function loginRequired(){
+	if(!me){
+		$.mobile.changePage("#home");
+		login();
+	}
+}
+
+function pageChangeNew(){
+	if(window.location.hash != "#new")
+		return;
+	
+	var url = '/me/friends?accessToken='+accessToken;
+	console.log(url);
+	FB.api(url, function(data){
+		if(data.error){
+			return;
+		}
+		console.log(data);
+		for (var i = 0; i < data.data.length; i++) {
+			var friend = data.data[i];
+			var content = "<li><a href='javascript:startGame("+friend.id+");'>";
+				content += "<img src='https://graph.facebook.com/"+friend.id+"/picture' /> ";
+				content += friend.name+"</a></li>";
+			$("#list-friends").append(content);
 		}
 	});
+}
 
-	// respond to clicks on the login and logout links
-	document.getElementById('auth-loginlink').addEventListener('click', function(){
-		FB.login();
+function startGame(friendId){
+	var input = {
+		userId: me.id,
+		friendId: friendId
+	};
+	$.get(serverUrl+"game", input, function(data){
+		console.log(data);
 	});
-	document.getElementById('auth-logoutlink').addEventListener('click', function(){
-		FB.logout();
-	}); 
-} 
+}
+
+$(document).ready(function(){
+	
+	$("#btn-login").click(function(){
+		if(me){
+			logout();
+		}
+		else{
+			login();
+		}
+		
+	});
+	
+	$("#btn-game-new").click(function(){
+		if(me){
+			$.mobile.changePage("#new");
+			pageChangeNew();
+		}
+		else{
+			login();
+		}
+	});
+});

@@ -8,34 +8,49 @@
 		<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
 		<script src="src/js/custom.js"></script>
-
 	</head>
 	<body>
 		<div id="fb-root"></div>
-		<div data-role="page">
+
+		<!-- Start of first page: #one -->
+		<div data-role="page" id="home">
 
 			<div data-role="header">
+				<a href="index.html" data-icon="delete">Cancel</a>
 				<h1>Voyzala</h1>
+				<a href="#" id="btn-login" data-theme="b"><span class="btn-text">Login</span></a>
 			</div><!-- /header -->
 
-			<div data-role="content">	
-				<a href="index.html" data-role="button" data-icon="delete">New Game</a> 
+			<div data-role="content">
+				<a id="btn-game-new" data-role="button" data-icon="delete">New Game</a> 
 				<a href="index.html" data-role="button" data-icon="delete">View Games</a> 
-				
-				
-				<h1>Facebook Client-side Authentication Example</h1>
-				<div id="auth-status">
-					<div id="auth-loggedout">
-						<a href="#" id="auth-loginlink">Login</a>
-					</div>
-					<div id="auth-loggedin" style="display:none">
-						Hi, <span id="auth-displayname"></span>  
-						(<a href="#" id="auth-logoutlink">logout</a>)
-					</div>
-				</div>
+			</div><!-- /content -->
+		</div><!-- /page one -->
+		<!-- Start of second page: #two -->
+		<div data-role="page" id="new">
+			<script>
+				var pageLoad = function(){
+					pageChangeNew();
+				};
+			</script>
+			<div data-role="header">
+				<h1>New Game</h1>
+			</div><!-- /header -->
+
+			<div data-role="content" >	
+				<ul data-role="listview" id="list-friends">
+					
+				</ul>
+
 			</div><!-- /content -->
 
-		</div><!-- /page -->
+			<div data-role="footer">
+				<h4>Page Footer</h4>
+			</div><!-- /footer -->
+		</div><!-- /page two -->
 
-	</body>
+
+	</div><!-- /page -->
+
+</body>
 </html>
