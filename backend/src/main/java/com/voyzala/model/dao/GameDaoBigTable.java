@@ -28,13 +28,11 @@ public class GameDaoBigTable extends BaseDaoBigTable<Game> implements GameDao {
     public List<Game> getCurrentGamesForUser(Long userId) {
         final Query q1 = new Query(super.getDataStoreKind());
         q1.addFilter("playerOne", Query.FilterOperator.EQUAL, userId);
-        q1.addSort("createdOn", Query.SortDirection.DESCENDING);
         final PreparedQuery pq1 = super.getDatastore().prepare(q1);
         final List<Entity> games = pq1.asList(FetchOptions.Builder.withDefaults());
 
         final Query q2 = new Query(super.getDataStoreKind());
         q2.addFilter("playerTwo", Query.FilterOperator.EQUAL, userId);
-        q2.addSort("createdOn", Query.SortDirection.DESCENDING);
         final PreparedQuery pq2 = super.getDatastore().prepare(q2);
         final List<Entity> playerTwoGames = pq2.asList(FetchOptions.Builder.withDefaults());
 

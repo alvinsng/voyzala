@@ -49,9 +49,9 @@ public class GameServiceImpl implements GameService {
         final Game game = new Game();
         game.setPlayerOne(userId);
         game.setPlayerTwo(friendId);
-        game.setPlayerOneScore(0);
-        game.setPlayerTwoScore(0);
-        game.setCurrentTurnCount(0);
+        game.setPlayerOneScore(0L);
+        game.setPlayerTwoScore(0L);
+        game.setCurrentTurnCount(0L);
 
         gameDao.save(game);
         return game;

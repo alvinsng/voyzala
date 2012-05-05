@@ -4,6 +4,7 @@ import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.voyzala.model.Id;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  * description
@@ -29,6 +30,7 @@ public class Turn {
         return KeyFactory.keyToString(key);
     }
 
+    @JsonIgnore
     public Key getKey() {
         return key;
     }

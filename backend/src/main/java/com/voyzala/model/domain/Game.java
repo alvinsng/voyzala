@@ -3,6 +3,7 @@ package com.voyzala.model.domain;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.voyzala.model.Id;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.util.Date;
 
@@ -24,13 +25,13 @@ public class Game {
 
     private Long playerTwo;
 
-    private Integer playerOneScore;
+    private Long playerOneScore;
 
-    private Integer playerTwoScore;
+    private Long playerTwoScore;
 
-    private Date createdOn;
+    private Date createdOn = new Date();
 
-    private Integer currentTurnCount;
+    private Long currentTurnCount;
 
     private Key currentTurnKey;
 
@@ -38,6 +39,7 @@ public class Game {
         return KeyFactory.keyToString(key);
     }
 
+    @JsonIgnore
     public Key getKey() {
         return key;
     }
@@ -62,19 +64,19 @@ public class Game {
         this.playerTwo = playerTwo;
     }
 
-    public Integer getPlayerOneScore() {
+    public Long getPlayerOneScore() {
         return playerOneScore;
     }
 
-    public void setPlayerOneScore(Integer playerOneScore) {
+    public void setPlayerOneScore(Long playerOneScore) {
         this.playerOneScore = playerOneScore;
     }
 
-    public Integer getPlayerTwoScore() {
+    public Long getPlayerTwoScore() {
         return playerTwoScore;
     }
 
-    public void setPlayerTwoScore(Integer playerTwoScore) {
+    public void setPlayerTwoScore(Long playerTwoScore) {
         this.playerTwoScore = playerTwoScore;
     }
 
@@ -86,11 +88,11 @@ public class Game {
         this.createdOn = createdOn;
     }
 
-    public Integer getCurrentTurnCount() {
+    public Long getCurrentTurnCount() {
         return currentTurnCount;
     }
 
-    public void setCurrentTurnCount(Integer currentTurnCount) {
+    public void setCurrentTurnCount(Long currentTurnCount) {
         this.currentTurnCount = currentTurnCount;
     }
 
