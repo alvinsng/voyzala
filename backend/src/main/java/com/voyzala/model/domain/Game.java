@@ -30,7 +30,9 @@ public class Game {
 
     private Date createdOn;
 
-    private Long currentTurnPlayer;
+    private Integer currentTurnCount;
+
+    private Key currentTurnKey;
 
     public String getStringKey() {
         return KeyFactory.keyToString(key);
@@ -84,11 +86,19 @@ public class Game {
         this.createdOn = createdOn;
     }
 
-    public Long getCurrentTurnPlayer() {
-        return currentTurnPlayer;
+    public Integer getCurrentTurnCount() {
+        return currentTurnCount;
     }
 
-    public void setCurrentTurnPlayer(Long currentTurnPlayer) {
-        this.currentTurnPlayer = currentTurnPlayer;
+    public void setCurrentTurnCount(Integer currentTurnCount) {
+        this.currentTurnCount = currentTurnCount;
+    }
+
+    public Key getCurrentTurnKey() {
+        return currentTurnKey;
+    }
+
+    public void setCurrentTurnKey(Key currentTurnKey) {
+        this.currentTurnKey = currentTurnKey;
     }
 }

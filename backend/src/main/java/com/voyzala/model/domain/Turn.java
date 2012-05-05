@@ -25,8 +25,6 @@ public class Turn {
 
     private Key cardKey;
 
-    private Integer turnCountInGame;
-
     public String getStringKey() {
         return KeyFactory.keyToString(key);
     }
@@ -63,11 +61,4 @@ public class Turn {
         this.cardKey = cardKey;
     }
 
-    public Integer getTurnCountInGame() {
-        return turnCountInGame;
-    }
-
-    public void setTurnCountInGame(Integer turnCountInGame) {
-        this.turnCountInGame = turnCountInGame;
-    }
 }

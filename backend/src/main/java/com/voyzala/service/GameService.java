@@ -1,5 +1,6 @@
 package com.voyzala.service;
 
+import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.Key;
 import com.voyzala.model.domain.Card;
 import com.voyzala.model.domain.Game;
@@ -44,28 +45,21 @@ public interface GameService {
     Card startRound(Key gameId);
 
     /**
-     * Submits your voice data and completes your turn.
-     *
-     * @param turn the turn to submit
-     */
-    void submitTurn(Turn turn);
-
-    /**
      * Gives you the voice data to guess the word.
      *
-     * @param gameId the key for the game
+     * @param gameKey the key for the game
      * @return Turn the turn with the blob key for voice data
      */
-    Turn guessRound(Key gameId);
+    Turn guessRound(Key gameKey);
 
     /**
      * Submits the guess.
      *
      * @param guessText the text that you guessed for the word
-     * @param turnId    the id for the turn that you are playing.
+     * @param turnKey   the id for the turn that you are playing.
      * @return Boolean true if you got it right, false if not
      */
-    Boolean submitGuess(String guessText, Key turnId);
+    Boolean submitGuess(String guessText, Key turnKey);
 
     /**
      * Admin method for adding cards to the data store
@@ -75,4 +69,12 @@ public interface GameService {
      * @return the new game card
      */
     Card createNewCard(String word, String forbiddenWords);
+
+    /**
+     * Submit data for the beginning of a round.
+     *
+     * @param turnKey      the turn being submitted
+     * @param voiceDataKey a key for the blob of the voice recording
+     */
+    void submitTurn(Key turnKey, BlobKey voiceDataKey);
 }
