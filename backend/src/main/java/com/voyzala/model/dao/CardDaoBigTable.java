@@ -38,6 +38,6 @@ public class CardDaoBigTable extends BaseDaoBigTable<Card> implements CardDao {
 
         Entity e = pq.asSingleEntity();
 
-        return super.entityToObject(e);
+        return e == null ? null : super.entityToObject(e);
     }
 }
