@@ -1,5 +1,8 @@
 package com.voyzala.model.domain;
 
+import com.google.appengine.api.datastore.Key;
+import com.voyzala.model.Id;
+
 /**
  * description
  * <p/>
@@ -10,4 +13,7 @@ package com.voyzala.model.domain;
  * @author Geoffrey Chandler, geoffc@gmail.com
  */
 public class Turn {
+
+    @Id
+    private Key key;
 }
