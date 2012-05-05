@@ -50,6 +50,7 @@ public class GameServiceImpl implements GameService {
         game.setPlayerTwo(friendId);
         game.setPlayerOneScore(0);
         game.setPlayerTwoScore(0);
+        game.setCurrentTurnPlayer(userId);
 
         gameDao.save(game);
         return game;
@@ -67,7 +68,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public void submitTurn(Turn turn) {
-        //TODO: Implement
+        turnDao.save(turn);
 
     }
 
@@ -87,7 +88,7 @@ public class GameServiceImpl implements GameService {
     public Card createNewCard(String word, String forbiddenWords) {
         final Card card = new Card();
         card.setWord(word);
-        card.setPipeDelimitedForbiddenWords(forbiddenWords);
+        card.setForbiddenWords(forbiddenWords);
         cardDao.save(card);
         return card;
     }

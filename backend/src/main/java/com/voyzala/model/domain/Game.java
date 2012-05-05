@@ -29,6 +29,8 @@ public class Game {
 
     private Date createdOn;
 
+    private Long currentTurnPlayer;
+
     public Key getKey() {
         return key;
     }
@@ -75,5 +77,13 @@ public class Game {
 
     public void setCreatedOn(Date createdOn) {
         this.createdOn = createdOn;
+    }
+
+    public Long getCurrentTurnPlayer() {
+        return currentTurnPlayer;
+    }
+
+    public void setCurrentTurnPlayer(Long currentTurnPlayer) {
+        this.currentTurnPlayer = currentTurnPlayer;
     }
 }

@@ -19,7 +19,7 @@ public class Card {
 
     private String word;
 
-    private String pipeDelimitedForbiddenWords;
+    private String forbiddenWords;
 
     public Key getKey() {
         return key;
@@ -37,12 +37,12 @@ public class Card {
         this.word = word;
     }
 
-    public String getPipeDelimitedForbiddenWords() {
-        return pipeDelimitedForbiddenWords;
+    public String getForbiddenWords() {
+        return forbiddenWords;
     }
 
-    public void setPipeDelimitedForbiddenWords(String pipeDelimitedForbiddenWords) {
-        this.pipeDelimitedForbiddenWords = pipeDelimitedForbiddenWords;
+    public void setForbiddenWords(String forbiddenWords) {
+        this.forbiddenWords = forbiddenWords;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class Card {
         return "Card{" +
                 "key=" + key +
                 ", word='" + word + '\'' +
-                ", pipeDelimitedForbiddenWords='" + pipeDelimitedForbiddenWords + '\'' +
+                ", forbiddenWords='" + forbiddenWords + '\'' +
                 '}';
     }
 }

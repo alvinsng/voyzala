@@ -46,17 +46,17 @@ public class CardDaoBigTableTest {
 
         Card c1 = new Card();
         c1.setWord("shoe");
-        c1.setPipeDelimitedForbiddenWords("feet|toes|boot|socks");
+        c1.setForbiddenWords("feet|toes|boot|socks");
         cardDao.save(c1);
 
         Card c2 = new Card();
         c2.setWord("one");
-        c2.setPipeDelimitedForbiddenWords("two|three|four|five");
+        c2.setForbiddenWords("two|three|four|five");
         cardDao.save(c2);
 
         Card c3 = new Card();
         c3.setWord("a");
-        c3.setPipeDelimitedForbiddenWords("b|c|d|e");
+        c3.setForbiddenWords("b|c|d|e");
         cardDao.save(c3);
 
         Card fetched = cardDao.getRandomCard();
