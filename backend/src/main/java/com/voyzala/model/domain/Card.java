@@ -16,4 +16,32 @@ public class Card {
 
     @Id
     private Key key;
+
+    private String word;
+
+    private String pipeDelimitedForbiddenWords;
+
+    public Key getKey() {
+        return key;
+    }
+
+    public void setKey(Key key) {
+        this.key = key;
+    }
+
+    public String getWord() {
+        return word;
+    }
+
+    public void setWord(String word) {
+        this.word = word;
+    }
+
+    public String getPipeDelimitedForbiddenWords() {
+        return pipeDelimitedForbiddenWords;
+    }
+
+    public void setPipeDelimitedForbiddenWords(String pipeDelimitedForbiddenWords) {
+        this.pipeDelimitedForbiddenWords = pipeDelimitedForbiddenWords;
+    }
 }
