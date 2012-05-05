@@ -19,9 +19,28 @@
 
     <context:component-scan base-package="com.voyzala.controller"/>
 
-    <mvc:resources mapping="/resources/**" location="/resources/"/>
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+                    <property name="objectMapper" ref="jacksonObjectMapper"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
 
-    <bean id="requestCache"
-          class="org.springframework.security.web.savedrequest.HttpSessionRequestCache"/>
+    <bean id="jaxbAnnIntrospector" class="org.codehaus.jackson.xc.JaxbAnnotationIntrospector"/>
+    <bean id="jacksonObjectMapper" class="org.codehaus.jackson.map.ObjectMapper">
+        <property name="serializationConfig.annotationIntrospector" ref="jaxbAnnIntrospector"/>
+        <property name="deserializationConfig.annotationIntrospector" ref="jaxbAnnIntrospector"/>
+    </bean>
+
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+                <property name="objectMapper" ref="jacksonObjectMapper"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
 
 </beans>
