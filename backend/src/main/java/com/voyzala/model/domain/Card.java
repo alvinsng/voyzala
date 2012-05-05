@@ -1,6 +1,7 @@
 package com.voyzala.model.domain;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.voyzala.model.Id;
 
 /**
@@ -20,6 +21,10 @@ public class Card {
     private String word;
 
     private String forbiddenWords;
+
+    public String getStringKey() {
+        return KeyFactory.keyToString(key);
+    }
 
     public Key getKey() {
         return key;

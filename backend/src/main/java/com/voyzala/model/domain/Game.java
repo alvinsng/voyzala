@@ -1,6 +1,7 @@
 package com.voyzala.model.domain;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.voyzala.model.Id;
 
 import java.util.Date;
@@ -30,6 +31,10 @@ public class Game {
     private Date createdOn;
 
     private Long currentTurnPlayer;
+
+    public String getStringKey() {
+        return KeyFactory.keyToString(key);
+    }
 
     public Key getKey() {
         return key;

@@ -1,5 +1,6 @@
 package com.voyzala.controller;
 
+import com.google.appengine.api.blobstore.BlobstoreService;
 import com.voyzala.model.domain.Card;
 import com.voyzala.model.domain.Game;
 import com.voyzala.service.GameService;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * description
@@ -43,9 +45,12 @@ public class RestController {
 
     private final GameService gameService;
 
+    private final BlobstoreService blobstoreService;
+
     @Inject
-    public RestController(GameService gameService) {
+    public RestController(GameService gameService, BlobstoreService blobstoreService) {
         this.gameService = gameService;
+        this.blobstoreService = blobstoreService;
     }
 
     @ResponseBody
@@ -54,6 +59,12 @@ public class RestController {
         final Game game = gameService.createNewGame(Long.parseLong(userId), Long.parseLong(friendId));
         final Card card = gameService.startRound(game.getKey());
         return new NewGameDTO(game, card);
+    }
+
+    @RequestMapping(value = "/submitTurn", method = RequestMethod.POST)
+    public void submitTurn(@RequestParam final String gameKey,
+                           @RequestParam final String cardKey,
+                           final HttpServletRequest req) {
     }
 
 }
