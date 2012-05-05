@@ -1,7 +1,10 @@
 package com.voyzala.model.domain;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.voyzala.model.Id;
+
+import java.util.Date;
 
 /**
  * description
@@ -24,6 +27,14 @@ public class Game {
     private Integer playerOneScore;
 
     private Integer playerTwoScore;
+
+    private Date createdOn;
+
+    private Long currentTurnPlayer;
+
+    public String getStringKey() {
+        return KeyFactory.keyToString(key);
+    }
 
     public Key getKey() {
         return key;
@@ -63,5 +74,21 @@ public class Game {
 
     public void setPlayerTwoScore(Integer playerTwoScore) {
         this.playerTwoScore = playerTwoScore;
+    }
+
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public Long getCurrentTurnPlayer() {
+        return currentTurnPlayer;
+    }
+
+    public void setCurrentTurnPlayer(Long currentTurnPlayer) {
+        this.currentTurnPlayer = currentTurnPlayer;
     }
 }

@@ -39,24 +39,36 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<Game> getCurrentGames(Long userId) {
-        //TODO: Implement
-        return null;
+        return gameDao.getCurrentGamesForUser(userId);
     }
 
     @Override
-    public Card startRound(Long myUserId, Long friendUserId) {
+    public Game createNewGame(Long userId, Long friendId) {
 
-        Card card = new Card();
-        card.setWord("shoe");
-        card.setPipeDelimitedForbiddenWords("feet|toes|boot|socks");
+        final Game game = new Game();
+        game.setPlayerOne(userId);
+        game.setPlayerTwo(friendId);
+        game.setPlayerOneScore(0);
+        game.setPlayerTwoScore(0);
+        game.setCurrentTurnPlayer(userId);
 
+        gameDao.save(game);
+        return game;
+    }
+
+    @Override
+    public Card startRound(Key gameKey) {
+        final Card card = cardDao.getRandomCard();
+        Turn turn = new Turn();
+        turn.setGameKey(gameKey);
+        turn.setCardKey(card.getKey());
+        turn.setTurnCountInGame(1);
         return card;
     }
 
     @Override
     public void submitTurn(Turn turn) {
-        //TODO: Implement
-
+        turnDao.save(turn);
     }
 
     @Override
@@ -69,5 +81,14 @@ public class GameServiceImpl implements GameService {
     public Boolean submitGuess(String guessText, Key turnId) {
         //TODO: Implement
         return null;
+    }
+
+    @Override
+    public Card createNewCard(String word, String forbiddenWords) {
+        final Card card = new Card();
+        card.setWord(word);
+        card.setForbiddenWords(forbiddenWords);
+        cardDao.save(card);
+        return card;
     }
 }
