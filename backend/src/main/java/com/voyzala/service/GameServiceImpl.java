@@ -44,8 +44,12 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Card startRound(Long myUserId, Long friendUserId) {
-        //TODO: Implement
-        return null;
+
+        Card card =  new Card();
+        card.setWord("shoe");
+        card.setPipeDelimitedForbiddenWords("feet|toes|boot|socks");
+
+        return card;
     }
 
     @Override
