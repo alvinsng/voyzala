@@ -65,4 +65,12 @@ public interface GameService {
      */
     Boolean submitGuess(String guessText, Key turnId);
 
+    /**
+     * Admin method for adding cards to the data store
+     *
+     * @param word           the word that is to be guessed
+     * @param forbiddenWords the words that should not be said
+     * @return the new game card
+     */
+    Card createNewCard(String word, String forbiddenWords);
 }

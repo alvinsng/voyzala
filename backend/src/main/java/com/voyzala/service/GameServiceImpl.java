@@ -83,4 +83,13 @@ public class GameServiceImpl implements GameService {
         //TODO: Implement
         return null;
     }
+
+    @Override
+    public Card createNewCard(String word, String forbiddenWords) {
+        final Card card = new Card();
+        card.setWord(word);
+        card.setPipeDelimitedForbiddenWords(forbiddenWords);
+        cardDao.save(card);
+        return card;
+    }
 }
