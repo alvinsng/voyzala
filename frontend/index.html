@@ -11,46 +11,62 @@
 	</head>
 	<body>
 		<div id="fb-root"></div>
-
-		<!-- Start of first page: #one -->
 		<div data-role="page" id="home">
 
 			<div data-role="header">
-				<a href="index.html" data-icon="delete">Cancel</a>
 				<h1>Voyzala</h1>
 				<a href="#" id="btn-login" data-theme="b"><span class="btn-text">Login</span></a>
 			</div><!-- /header -->
 
 			<div data-role="content">
-				<a id="btn-game-new" data-role="button" data-icon="delete">New Game</a> 
-				<a href="index.html" data-role="button" data-icon="delete">View Games</a> 
+				<a id="btn-game-new" data-role="button" data-icon="plus">New Game</a> 
+				<a href="#view" data-role="button" data-icon="grid">View Games</a> 
 			</div><!-- /content -->
 		</div><!-- /page one -->
-		<!-- Start of second page: #two -->
-		<div data-role="page" id="new">
-			<script>
-				var pageLoad = function(){
-					pageChangeNew();
-				};
-			</script>
+		
+		<div data-role="page" id="view">
 			<div data-role="header">
-				<h1>New Game</h1>
+				<a data-icon="back" href="#home">Back</a>
+				<h1>View Games</h1>
+				<a href="#" id="btn-login" data-theme="b"><span class="btn-text">Login</span></a>
+			</div><!-- /header -->
+			<div data-role="content">
+				<ul id="list-games" data-role="listview">
+					
+				</ul>
+			</div><!-- /content -->
+		</div><!-- /page one -->
+
+		<div data-role="page" id="new">
+			<div data-role="header">
+				<a data-icon="back" href="#home">Back</a>
+				<h1>Select Friend</h1>
+				<a href="#" id="btn-login" data-theme="b"><span class="btn-text">Login</span></a>
 			</div><!-- /header -->
 
 			<div data-role="content" >	
 				<ul data-role="listview" id="list-friends">
 					
 				</ul>
-
 			</div><!-- /content -->
-
-			<div data-role="footer">
-				<h4>Page Footer</h4>
-			</div><!-- /footer -->
 		</div><!-- /page two -->
+		<div data-role="page" id="game" data-theme="a">
+			<div data-role="header">
+				<a data-icon="back" href="#new">Back</a>
+				<h1>Game</h1>
+				<a href="#" id="btn-login" data-theme="b"><span class="btn-text">Login</span></a>
+			</div><!-- /header -->
 
-
-	</div><!-- /page -->
-
-</body>
+			<div data-role="content" style="text-align:center">
+				<div id="game-time"><h1>0:00</h1></div>
+				<div id="game-word"><h1>Loading Word...</h1></div>
+				<ul data-role="listview" id="game-forbiddenWords">
+				</ul>
+				<fieldset class="ui-grid-a">
+					<div class="ui-block-a"><button data-icon="cancel" type="submit" data-theme="c">Pass</button></div>
+					<div class="ui-block-b"><button data-icon="check" type="submit" data-theme="b">Submit</button></div>	   
+				</fieldset>
+			</div><!-- /content -->
+		</div><!-- /page two -->
+	</body>
 </html>
