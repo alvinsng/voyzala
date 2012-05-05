@@ -96,6 +96,11 @@ public class Game {
         this.currentTurnCount = currentTurnCount;
     }
 
+    public String getCurrentTurnStringKey() {
+        return KeyFactory.keyToString(currentTurnKey);
+    }
+
+    @JsonIgnore
     public Key getCurrentTurnKey() {
         return currentTurnKey;
     }

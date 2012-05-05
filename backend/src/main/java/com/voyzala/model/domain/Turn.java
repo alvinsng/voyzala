@@ -47,6 +47,11 @@ public class Turn {
         this.voiceDataKey = voiceDataKey;
     }
 
+    public String getGameStringKey() {
+        return KeyFactory.keyToString(gameKey);
+    }
+
+    @JsonIgnore
     public Key getGameKey() {
         return gameKey;
     }
@@ -55,6 +60,11 @@ public class Turn {
         this.gameKey = gameKey;
     }
 
+    public String getCardStringKey() {
+        return KeyFactory.keyToString(cardKey);
+    }
+
+    @JsonIgnore
     public Key getCardKey() {
         return cardKey;
     }
