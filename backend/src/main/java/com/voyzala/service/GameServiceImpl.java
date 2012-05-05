@@ -69,7 +69,6 @@ public class GameServiceImpl implements GameService {
     @Override
     public void submitTurn(Turn turn) {
         turnDao.save(turn);
-
     }
 
     @Override

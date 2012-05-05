@@ -22,7 +22,7 @@ public interface GameService {
      * Used to view all games that you have going on in the first screen.
      *
      * @param userId the userId looking for a game list
-     * @return a list of the current games
+     * @return list of current games
      */
     List<Game> getCurrentGames(Long userId);
 
@@ -43,8 +43,10 @@ public interface GameService {
      */
     Card startRound(Key gameId);
 
-    /*
-    Submits your voice data and completes your trun.
+    /**
+     * Submits your voice data and completes your turn.
+     *
+     * @param turn the turn to submit
      */
     void submitTurn(Turn turn);
 
