@@ -57,9 +57,9 @@ public interface GameService {
      *
      * @param turnKey   the id for the turn that you are playing.
      * @param guessText the text that you guessed for the word
-     * @return Boolean true if you got it right, false if not
+     * @return Card the game card that was being played
      */
-    Boolean submitGuess(Key turnKey, String guessText);
+    Card submitGuess(Key turnKey, String guessText);
 
     /**
      * Admin method for adding cards to the data store

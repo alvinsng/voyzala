@@ -85,7 +85,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Boolean submitGuess(final Key turnKey, final String guessText) {
+    public Card submitGuess(final Key turnKey, final String guessText) {
         final Turn turn = turnDao.fetchByKey(turnKey);
         final Game game = gameDao.fetchByKey(turn.getGameKey());
         final Card card = cardDao.fetchByKey(turn.getCardKey());
@@ -98,11 +98,9 @@ public class GameServiceImpl implements GameService {
             } else {
                 game.setPlayerTwoScore(game.getPlayerTwoScore() + 1);
             }
-            return true;
-        } else {
-            // wrong answer
-            return false;
+            gameDao.save(game);
         }
+        return card;
     }
 
     @Override

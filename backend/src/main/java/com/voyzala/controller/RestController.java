@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * description
+ * Main Controller for all REST operations
  * <p/>
  * <small>
  * Originally created by gcc on 5/4/12 at 10:18 PM
@@ -98,8 +98,8 @@ public class RestController {
 
     @ResponseBody
     @RequestMapping(value = "/guess/{turnKey}", method = RequestMethod.GET)
-    public Boolean submitGuess(@PathVariable("turnKey") final String turnKey,
-                               @RequestParam final String guess) {
+    public Card submitGuess(@PathVariable("turnKey") final String turnKey,
+                            @RequestParam final String guess) {
         return gameService.submitGuess(KeyFactory.stringToKey(turnKey), guess);
     }
 
