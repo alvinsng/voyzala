@@ -1,13 +1,12 @@
 package com.voyzala.model.dao;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.*;
 import com.voyzala.model.domain.Card;
 import org.springframework.stereotype.Repository;
 
 import javax.inject.Inject;
+import java.util.List;
+import java.util.Random;
 
 /**
  * description
@@ -27,17 +26,21 @@ public class CardDaoBigTable extends BaseDaoBigTable<Card> implements CardDao {
     }
 
     @Override
+    //TODO: Make this not suck horribly
     public Card getRandomCard() {
 
-        final double randomNumber = Math.random();
-
         final Query q1 = new Query(super.getDataStoreKind());
-        q1.addFilter("randomSeed", Query.FilterOperator.GREATER_THAN_OR_EQUAL, randomNumber);
-        q1.addSort("randomSeed");
         final PreparedQuery pq = super.getDatastore().prepare(q1);
+        List<Entity> entities = pq.asList(FetchOptions.Builder.withDefaults());
 
-        Entity e = pq.asSingleEntity();
-
-        return e == null ? null : super.entityToObject(e);
+        int size = entities.size();
+        int item = new Random().nextInt(size); // In real life, the Random object should be rather more shared than this
+        int i = 0;
+        for (Entity obj : entities) {
+            if (i == item)
+                return super.entityToObject(obj);
+            i = i + 1;
+        }
+        return null;
     }
 }

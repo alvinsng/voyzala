@@ -33,7 +33,7 @@ public interface GameService {
      * @param friendId the id of your opponent
      * @return Card the game card to play
      */
-    Card createNewGame(Long userId, Long friendId);
+    Game createNewGame(Long userId, Long friendId);
 
     /**
      * Starts a new round in an existing game.

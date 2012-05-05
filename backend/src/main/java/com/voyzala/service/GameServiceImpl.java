@@ -43,7 +43,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Card createNewGame(Long userId, Long friendId) {
+    public Game createNewGame(Long userId, Long friendId) {
 
         final Game game = new Game();
         game.setPlayerOne(userId);
@@ -52,8 +52,7 @@ public class GameServiceImpl implements GameService {
         game.setPlayerTwoScore(0);
 
         gameDao.save(game);
-
-        return startRound(game.getKey());
+        return game;
     }
 
     @Override

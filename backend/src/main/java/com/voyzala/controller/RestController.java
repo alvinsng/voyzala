@@ -1,6 +1,7 @@
 package com.voyzala.controller;
 
 import com.voyzala.model.domain.Card;
+import com.voyzala.model.domain.Game;
 import com.voyzala.service.GameService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,24 @@ import javax.inject.Inject;
 @Controller
 public class RestController {
 
+    private static class NewGameDTO {
+        private final Game game;
+        private final Card card;
+
+        private NewGameDTO(Game game, Card card) {
+            this.game = game;
+            this.card = card;
+        }
+
+        public Game getGame() {
+            return game;
+        }
+
+        public Card getCard() {
+            return card;
+        }
+    }
+
     private final GameService gameService;
 
     @Inject
@@ -31,8 +50,10 @@ public class RestController {
 
     @ResponseBody
     @RequestMapping(value = "/game", method = RequestMethod.GET)
-    public Card startGame(@RequestParam String userId, @RequestParam String friendId) {
-        return gameService.createNewGame(Long.parseLong(userId), Long.parseLong(friendId));
+    public NewGameDTO startGame(@RequestParam String userId, @RequestParam String friendId) {
+        final Game game = gameService.createNewGame(Long.parseLong(userId), Long.parseLong(friendId));
+        final Card card = gameService.startRound(game.getKey());
+        return new NewGameDTO(game, card);
     }
 
 }

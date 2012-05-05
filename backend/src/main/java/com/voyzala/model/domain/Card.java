@@ -21,8 +21,6 @@ public class Card {
 
     private String pipeDelimitedForbiddenWords;
 
-    private Double randomSeed = Math.random();
-
     public Key getKey() {
         return key;
     }
@@ -45,5 +43,14 @@ public class Card {
 
     public void setPipeDelimitedForbiddenWords(String pipeDelimitedForbiddenWords) {
         this.pipeDelimitedForbiddenWords = pipeDelimitedForbiddenWords;
+    }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "key=" + key +
+                ", word='" + word + '\'' +
+                ", pipeDelimitedForbiddenWords='" + pipeDelimitedForbiddenWords + '\'' +
+                '}';
     }
 }
