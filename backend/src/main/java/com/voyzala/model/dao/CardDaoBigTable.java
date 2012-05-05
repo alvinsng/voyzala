@@ -33,6 +33,8 @@ public class CardDaoBigTable extends BaseDaoBigTable<Card> implements CardDao {
         final PreparedQuery pq = super.getDatastore().prepare(q1);
         List<Entity> entities = pq.asList(FetchOptions.Builder.withDefaults());
 
+        if (entities.size() < 1) return null;
+
         int size = entities.size();
         int item = new Random().nextInt(size); // In real life, the Random object should be rather more shared than this
         int i = 0;
