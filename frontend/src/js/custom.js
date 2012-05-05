@@ -1,7 +1,8 @@
 // Load the SDK Asynchronously
 var me = null;
 var accessToken = null;
-var serverUrl = "http://voyzala.appspot.com/";
+var serverUrl = "proxy.php";
+var gameId = null;
 
 (function(d){
 	var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
@@ -18,6 +19,7 @@ var serverUrl = "http://voyzala.appspot.com/";
 window.fbAsyncInit = function() {
 	FB.init({
 		appId      : '402672649772378', // App ID
+		channelUrl : 'channel.html', // Channel File
 		status     : true, // check login status
 		cookie     : true, // enable cookies to allow the server to access the session
 		xfbml      : true  // parse XFBML
@@ -33,6 +35,7 @@ window.fbAsyncInit = function() {
 	FB.Event.subscribe('auth.login', function(response) {
 		handleLogin(response);
 	});
+	console.log("loaded fb sdk");
 	
 }
 
@@ -45,65 +48,120 @@ function handleLogin(response){
 				$("#btn-login .btn-text").text(data.name);
 			}
 		});
-		pageLoad();
 	}
 	else{
 		$("#btn-login .btn-text").text("Login");
 	}
+	console.log("handled login");
 }
 
 function login(){
 	FB.login(function(response) {
 		handleLogin(response);
-		}, {
-			scope: 'friends_about_me'
-		});
+	}, {
+		scope: 'friends_about_me'
+	});
 }
 function logout(){
 	FB.logout();
 	$("#btn-login .btn-text").text("Login");
 }
 
-function loginRequired(){
-	if(!me){
-		$.mobile.changePage("#home");
-		login();
-	}
-}
-
 function pageChangeNew(){
-	if(window.location.hash != "#new")
+	var content = $("#list-friends").html();
+	if(content)
 		return;
 	
 	var url = '/me/friends?accessToken='+accessToken;
 	console.log(url);
 	FB.api(url, function(data){
-		if(data.error){
-			return;
-		}
 		console.log(data);
 		for (var i = 0; i < data.data.length; i++) {
 			var friend = data.data[i];
 			var content = "<li><a href='javascript:startGame("+friend.id+");'>";
-				content += "<img src='https://graph.facebook.com/"+friend.id+"/picture' /> ";
-				content += friend.name+"</a></li>";
+			content += "<img src='https://graph.facebook.com/"+friend.id+"/picture' /> ";
+			content += friend.name+"</a></li>";
 			$("#list-friends").append(content);
+			if(i > 50)
+				break;
 		}
+		$('#list-friends').listview('refresh');
 	});
+}
+
+function pageChangeView(){
+	var input = {
+		script: 'games',
+		userId: me.id
+	}
+	ajax(input, function(data){
+		console.log(data);
+				
+		for(var i = 0; i < games.length; i++){
+			$("#list-game").append("<li></li>");
+		}
+		$("#list-games").listview("refresh");
+	});
+	
 }
 
 function startGame(friendId){
 	var input = {
+		script: "game",
 		userId: me.id,
 		friendId: friendId
 	};
-	$.get(serverUrl+"game", input, function(data){
+	
+	ajax(input, function(data){
 		console.log(data);
+		$.mobile.changePage("#game");
+		$("#game-word h1").text(data.card.word);
+		gameId = data.game.stringKey;
+		var cards = data.card.forbiddenWords.split("|");
+		$("#game-forbiddenWords").empty();
+		for(var i = 0; i < cards.length; i++){
+			$("#game-forbiddenWords").append("<li>"+cards[i]+"</li>");
+		}
+		$("#game-forbiddenWords").listview("refresh");
+		$.mobile.changePage("#game");
+		
+	});
+}
+
+function ajax(input, success){
+	$.ajax({
+		url: serverUrl,
+		data: input,
+		success: success
 	});
 }
 
 $(document).ready(function(){
 	
+	$( document ).bind( "pagechange", function( event, data ){
+		//console.log(data);
+		var page = data.toPage[0].dataset.url;
+		//var page = data.toPage.split("#").pop();
+		
+		if(page != 'home' && !me){
+			event.preventDefault();
+			$.mobile.changePage("#home");
+			return;
+		}
+		if(page == 'new'){
+			pageChangeNew();
+		}
+		else if(page == 'game'){
+			if(!gameId){
+				$.mobile.changePage("#home");
+			}
+		}
+		else if(page == 'view'){
+			pageChangeView();
+		}
+		if(page != 'game')
+			gameId = null;
+	});
 	$("#btn-login").click(function(){
 		if(me){
 			logout();
